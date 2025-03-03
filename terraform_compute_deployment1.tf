@@ -1,3 +1,4 @@
+# This code block is to initialize the terraform configuration
 terraform {
     required_providers {
         aws = {
@@ -7,12 +8,14 @@ terraform {
     }
 }
 
+# This code block is to configure the AWS provider 
 provider "aws" {
     region = "ap-south-1"
     access_key = "AKIAZOZQFP3BT7UNH3ZN"
     secret_key = "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"
 }
 
+# This code block is to create an EBS volume
 resource "aws_ebs_volume" "myfirstebsvolume" {
     availability_zone = "ap-south-1a"
     size = 5
@@ -21,6 +24,7 @@ resource "aws_ebs_volume" "myfirstebsvolume" {
     }
 }
 
+# This code block is to create an EC2 instance
 resource "aws_instance" "myfirstawsinstance1" {
     ami = "ami-00bb6a80f01f03502"
     instance_type = "t2.micro"
@@ -29,9 +33,9 @@ resource "aws_instance" "myfirstawsinstance1" {
     tags = {
       Name = "MyFirstAWSInstance-CreatedByAmit"      
 }
-
 }
 
+# This Code block is to create AWS VPC
 resource "aws_vpc" "myfirstvpc" {
     cidr_block = "10.0.0.0/16"
     tags = {
@@ -39,6 +43,7 @@ resource "aws_vpc" "myfirstvpc" {
     }
 }
 
+# This Code block is to create AWS Subnet
 resource "aws_subnet" "myfirstsubnet" {
     vpc_id = aws_vpc.myfirstvpc.id
     cidr_block = "10.0.10.0/24"
@@ -47,6 +52,7 @@ resource "aws_subnet" "myfirstsubnet" {
     }
 }
 
+# This Code block is to create AWS EBS Volume Attachment
 resource "aws_volume_attachment" "myfirstvolumeattachment" {
     device_name = "/dev/sdf"
     volume_id = aws_ebs_volume.myfirstebsvolume.id
